@@ -9,5 +9,11 @@
   (:export
 
    :get-ip-interfaces
+   :name
+   :address
+   :netmask
+   :broadcast-address
+   :flags
+   :address-family
 
    ))
