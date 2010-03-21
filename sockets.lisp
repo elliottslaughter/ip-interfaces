@@ -1,3 +1,9 @@
+;;;   Copyright (C) 2010 Elliott Slaughter <elliottslaughter@gmail.com>
+;;;
+;;;   This file was *NOT* derived from Clozure CL source code.
+;;;   However, it is licensed under the LLGPL to maintain license
+;;;   compatibility with the rest of the library.
+
 (in-package :ip-interfaces)
 
 ;; CFFI interface to sockets

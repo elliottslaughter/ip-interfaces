@@ -1,3 +1,24 @@
+;;;   Copyright (C) 2010 Elliott Slaughter <elliottslaughter@gmail.com>
+;;;
+;;;   The source code in this file was adapted from Clozure CL, from
+;;;   version 1.4 file ccl/level-1/l1-sockets.lisp. The original license
+;;;   for that file is included below for your convenience. This
+;;;   derivative work is also licensed under the LLGPL.
+;;;
+;;;   Copyright (C) 2001-2009 Clozure Associates
+;;;   This file is part of Clozure CL.  
+;;;
+;;;   Clozure CL is licensed under the terms of the Lisp Lesser GNU Public
+;;;   License , known as the LLGPL and distributed with Clozure CL as the
+;;;   file "LICENSE".  The LLGPL consists of a preamble and the LGPL,
+;;;   which is distributed with Clozure CL as the file "LGPL".  Where these
+;;;   conflict, the preamble takes precedence.  
+;;;
+;;;   Clozure CL is referenced in the preamble as the "LIBRARY."
+;;;
+;;;   The LLGPL is also available online at
+;;;   http://opensource.franz.com/preamble.html
+
 (in-package :ip-interfaces)
 
 (defstruct ip-interface
