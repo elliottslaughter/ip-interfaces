@@ -73,10 +73,10 @@
   (let ((socket (socket :af-inet :sock-dgram :ipproto-ip)))
     (unwind-protect
     (with-foreign-object (realoutlen 'dword)
-      (do* ((i 4 (* i 2))
+      (do* ((i 128 (* i 2))
 	    (reservedlen (* i (foreign-type-size 'interface-info))
 			 (* i (foreign-type-size 'interface-info))))
-	   ((> i 128))
+	   ((> i 1024))
 	(with-foreign-object (buf :uchar reservedlen)
 	  (unless (zerop (wsaioctl
 			  socket
