@@ -27,8 +27,9 @@
 #+unix
 (progn
   (defcstruct sockaddr
-    #-darwin (sa-family :ushort)
-    #+darwin (sa-len :uchar) #+darwin (sa-family :uchar)
+    #-(or darwin openbsd) (sa-family :ushort)
+    #+(or darwin openbsd) (sa-len :uchar)
+    #+(or darwin openbsd) (sa-family :uchar)
     (sa-data :uchar :offset 4 :count 14))
 
   (defcstruct ifaddrs
