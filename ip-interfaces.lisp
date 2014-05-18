@@ -39,28 +39,28 @@
     (when (zerop (getifaddrs p))
       (unwind-protect
            (do ((q (mem-ref p :pointer)
-                   (foreign-slot-value q 'ifaddrs 'ifa-next))
+                   (foreign-slot-value q '(:struct ifaddrs) 'ifa-next))
                 (res ()))
                ((null-pointer-p q) (nreverse res))
-             (let ((addr (foreign-slot-value q 'ifaddrs 'ifa-addr)))
+             (let ((addr (foreign-slot-value q '(:struct ifaddrs) 'ifa-addr)))
                (when (and (not (null-pointer-p addr))
-                          (eql (foreign-slot-value addr 'sockaddr 'sa-family)
+                          (eql (foreign-slot-value addr '(:struct sockaddr) 'sa-family)
                                (foreign-enum-value 'address-family :af-inet)))
                  (push (make-ip-interface
-                        :name (foreign-slot-value q 'ifaddrs 'ifa-name)
+                        :name (foreign-slot-value q '(:struct ifaddrs) 'ifa-name)
                         :address
-                        (bytes (foreign-slot-value addr 'sockaddr 'sa-data) 4)
+                        (bytes (foreign-slot-value addr '(:struct sockaddr) 'sa-data) 4)
                         :netmask
                         (bytes (foreign-slot-value
-                                (foreign-slot-value q 'ifaddrs 'ifa-netmask)
-                                'sockaddr 'sa-data)
+                                (foreign-slot-value q '(:struct ifaddrs) 'ifa-netmask)
+                                '(:struct sockaddr) 'sa-data)
                                4)
                         :broadcast-address
                         (bytes (foreign-slot-value
-                                (foreign-slot-value q 'ifaddrs 'ifa-broadaddr)
-                                'sockaddr 'sa-data)
+                                (foreign-slot-value q '(:struct ifaddrs) 'ifa-broadaddr)
+                                '(:struct sockaddr) 'sa-data)
                                4)
-                        :flags (foreign-slot-value q 'ifaddrs 'ifa-flags)
+                        :flags (foreign-slot-value q '(:struct ifaddrs) 'ifa-flags)
                         :address-family :af-inet)
                        res))))
         (freeifaddrs (mem-ref p :pointer))))))

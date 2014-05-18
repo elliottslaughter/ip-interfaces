@@ -35,9 +35,9 @@
     (ifa-next :pointer) ; to ifaddrs
     (ifa-name :string)
     (ifa-flags :uint)
-    (ifa-addr (:pointer sockaddr))
-    (ifa-netmask (:pointer sockaddr))
-    (ifa-broadaddr (:pointer sockaddr))
+    (ifa-addr (:pointer (:struct sockaddr)))
+    (ifa-netmask (:pointer (:struct sockaddr)))
+    (ifa-broadaddr (:pointer (:struct sockaddr)))
     (ifa-data :pointer))
 
   (defcfun "getifaddrs" :int
