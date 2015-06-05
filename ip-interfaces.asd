@@ -11,8 +11,10 @@
 
 (defsystem ip-interfaces
   :name "ip-interfaces"
+  :description "Query network interfaces on the local machine."
   :author "Elliott Slaughter <elliottslaughter@gmail.com>"
   :version "0.0"
+  :license "LLGPL"
   :components ((:file "package")
                (:file "sockets")
                (:file "ip-interfaces"))
