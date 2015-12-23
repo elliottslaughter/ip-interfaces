@@ -9,6 +9,10 @@
   (:export
 
    :get-ip-interfaces
+   :get-ip-interfaces-by-flags
+
+   :filter-ip-interfaces-by-flags
+
    :ip-interface-name
    :ip-interface-address
    :ip-interface-netmask
