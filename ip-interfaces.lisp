@@ -30,6 +30,7 @@
   address-family)
 
 (defun bytes (pointer count)
+  (declare (optimize (debug 3)))
   (apply #'vector (loop for i from 0 below count
                      collect (mem-aref pointer :uchar i))))
 
@@ -67,6 +68,7 @@
 
 #+windows
 (defun get-ip-interfaces ()
+  (declare (optimize (debug 3)))
   (with-foreign-object (wsadata '(:struct wsadata))
     (unless (zerop (wsastartup #x0202 wsadata))
       (return-from get-ip-interfaces)))
@@ -100,9 +102,9 @@
 		       (push (make-ip-interface
 			      :name (format nil "ip~d" nameidx)
 			      :address
-			      (bytes (foreign-slot-value
-				      (foreign-slot-value
-				       (foreign-slot-value
+			      (bytes (foreign-slot-pointer
+				      (foreign-slot-pointer
+				       (foreign-slot-pointer
 					p '(:struct interface-info) 'ii-address)
 				       '(:union sockaddr-gen)
 				       'address-in)
@@ -110,9 +112,9 @@
 				      'sin-addr)
 				     4)
 			      :netmask
-			      (bytes (foreign-slot-value
-				      (foreign-slot-value
-				       (foreign-slot-value
+			      (bytes (foreign-slot-pointer
+				      (foreign-slot-pointer
+				       (foreign-slot-pointer
 					p '(:struct interface-info) 'ii-netmask)
 				       '(:union sockaddr-gen)
 				       'address-in)
@@ -120,9 +122,9 @@
 				      'sin-addr)
 				     4)
 			      :broadcast-address
-			      (bytes (foreign-slot-value
-				      (foreign-slot-value
-				       (foreign-slot-value
+			      (bytes (foreign-slot-pointer
+				      (foreign-slot-pointer
+				       (foreign-slot-pointer
 					p '(:struct interface-info)
 					'ii-broadcast-address)
 				       '(:union sockaddr-gen)
