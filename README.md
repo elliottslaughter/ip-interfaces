@@ -32,7 +32,7 @@ The API for ip-interfaces consists of a single function,
 get-ip-interfaces, which returns a list of ip-interface structs
 containing information about the interfaces on the machine:
 
-    * (asdf:oos 'asdf:load-op :ip-interfaces)
+    * (ql:quickload :ip-interfaces)
 
     NIL
     * (use-package :ip-interfaces)
