@@ -67,15 +67,15 @@
 
 #+windows
 (defun get-ip-interfaces ()
-  (with-foreign-object (wsadata 'wsadata)
+  (with-foreign-object (wsadata '(:struct wsadata))
     (unless (zerop (wsastartup #x0202 wsadata))
       (return-from get-ip-interfaces)))
   (let ((socket (socket :af-inet :sock-dgram :ipproto-ip)))
     (unwind-protect
     (with-foreign-object (realoutlen 'dword)
       (do* ((i 128 (* i 2))
-	    (reservedlen (* i (foreign-type-size 'interface-info))
-			 (* i (foreign-type-size 'interface-info))))
+	    (reservedlen (* i (foreign-type-size '(:struct interface-info)))
+			 (* i (foreign-type-size '(:struct interface-info)))))
 	   ((> i 1024))
 	(with-foreign-object (buf :uchar reservedlen)
 	  (unless (zerop (wsaioctl
@@ -93,45 +93,45 @@
 	    (when (< noutbytes reservedlen)
 	      (let ((interfaces nil))
 		(do* ((offset 0 (+ offset
-				   (foreign-type-size 'interface-info)))
+				   (foreign-type-size '(:struct interface-info))))
 		      (nameidx 0 (1+ nameidx)))
 		     ((>= offset noutbytes))
 		     (let ((p (inc-pointer buf offset)))
 		       (push (make-ip-interface
 			      :name (format nil "ip~d" nameidx)
 			      :address
-			      (bytes (foreign-slot-value
-				      (foreign-slot-value
-				       (foreign-slot-value
-					p 'interface-info 'ii-address)
-				       'sockaddr-gen
+			      (bytes (foreign-slot-pointer
+				      (foreign-slot-pointer
+				       (foreign-slot-pointer
+					p '(:struct interface-info) 'ii-address)
+				       '(:union sockaddr-gen)
 				       'address-in)
-				      'sockaddr-in
+				      '(:struct sockaddr-in)
 				      'sin-addr)
 				     4)
 			      :netmask
-			      (bytes (foreign-slot-value
-				      (foreign-slot-value
-				       (foreign-slot-value
-					p 'interface-info 'ii-netmask)
-				       'sockaddr-gen
+			      (bytes (foreign-slot-pointer
+				      (foreign-slot-pointer
+				       (foreign-slot-pointer
+					p '(:struct interface-info) 'ii-netmask)
+				       '(:union sockaddr-gen)
 				       'address-in)
-				      'sockaddr-in
+				      '(:struct sockaddr-in)
 				      'sin-addr)
 				     4)
 			      :broadcast-address
-			      (bytes (foreign-slot-value
-				      (foreign-slot-value
-				       (foreign-slot-value
-					p 'interface-info
+			      (bytes (foreign-slot-pointer
+				      (foreign-slot-pointer
+				       (foreign-slot-pointer
+					p '(:struct interface-info)
 					'ii-broadcast-address)
-				       'sockaddr-gen
+				       '(:union sockaddr-gen)
 				       'address-in)
-				      'sockaddr-in
+				      '(:struct sockaddr-in)
 				      'sin-addr)
 				     4)
 			      :flags (foreign-slot-value
-				      p 'interface-info 'ii-flags)
+				      p '(:struct interface-info) 'ii-flags)
 			      :address-family :af-inet)
 			     interfaces)))
 		(return interfaces)))))))
