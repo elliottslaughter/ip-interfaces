@@ -30,7 +30,6 @@
   address-family)
 
 (defun bytes (pointer count)
-  (declare (optimize (debug 3)))
   (apply #'vector (loop for i from 0 below count
                      collect (mem-aref pointer :uchar i))))
 
@@ -68,7 +67,6 @@
 
 #+windows
 (defun get-ip-interfaces ()
-  (declare (optimize (debug 3)))
   (with-foreign-object (wsadata '(:struct wsadata))
     (unless (zerop (wsastartup #x0202 wsadata))
       (return-from get-ip-interfaces)))
