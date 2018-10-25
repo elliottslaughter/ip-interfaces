@@ -1,4 +1,4 @@
-# ip-interfaces
+# ip-interfaces [![Build Status](https://travis-ci.org/elliottslaughter/ip-interfaces.svg?branch=master)](https://travis-ci.org/elliottslaughter/ip-interfaces)
 
 ## Introduction
 
