@@ -4,25 +4,29 @@ dist: trusty
 os:
   - linux
   - osx
+env:
+  matrix:
+  - LISP=sbcl LISPFLAGS=--disable-debugger
+  - LISP=ecl
 install:
   # Install SBCL
   - |
     if [[ "$(uname)" = "Linux" ]]; then
-      sudo apt-get install sbcl
+      sudo apt-get install $LISP
     fi
   - |
     if [[ "$(uname)" = "Darwin" ]]; then
       brew update
-      brew install sbcl
+      brew install $LISP
     fi
 
   # Install Quicklisp
   - curl -O https://beta.quicklisp.org/quicklisp.lisp
-  - sbcl --disable-debugger --load quicklisp.lisp --eval '(quicklisp-quickstart:install)' --eval '(ql::without-prompting (ql:add-to-init-file))' --eval '(quit)'
+  - $LISP $LISPFLAGS --load quicklisp.lisp --eval '(quicklisp-quickstart:install)' --eval '(ql::without-prompting (ql:add-to-init-file))' --eval '(quit)'
   - |
-   cat >> ~/.sbclrc <<EOF
-   (pushnew *default-pathname-defaults* asdf:*central-registry* :test #'equal)
+   cat >> ~/.${LISP}rc <<EOF
+   (pushnew #p"$PWD" asdf:*central-registry* :test #'equal)
   # Hack: This works because it terminates when it fails to see the EOF
 
 script:
-  - sbcl --disable-debugger --eval '(ql:quickload :ip-interfaces)' --eval '(format t "~a~%" (ip-interfaces:get-ip-interfaces))' --eval '(quit)'
+  - $LISP $LISPFLAGS --eval '(ql:quickload :ip-interfaces)' --eval '(format t "~a~%" (ip-interfaces:get-ip-interfaces))' --eval '(quit)'
