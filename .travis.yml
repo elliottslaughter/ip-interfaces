@@ -3,12 +3,21 @@ sudo: required
 dist: trusty
 os:
   - linux
+  - osx
 install:
   # Install SBCL
-  - sudo apt-get install sbcl
+  - |
+    if [[ "$(uname)" = "Linux" ]]; then
+      sudo apt-get install sbcl
+    fi
+  - |
+    if [[ "$(uname)" = "Darwin" ]]; then
+      brew update
+      brew install sbcl
+    fi
 
   # Install Quicklisp
-  - wget https://beta.quicklisp.org/quicklisp.lisp
+  - curl -O https://beta.quicklisp.org/quicklisp.lisp
   - sbcl --disable-debugger --load quicklisp.lisp --eval '(quicklisp-quickstart:install)' --eval '(ql::without-prompting (ql:add-to-init-file))' --eval '(quit)'
   - |
    cat >> ~/.sbclrc <<EOF
