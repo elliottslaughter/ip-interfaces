@@ -8,6 +8,10 @@ env:
   matrix:
   - LISP=sbcl LISPFLAGS=--disable-debugger
   - LISP=ecl
+matrix:
+  exclude:
+    - os: osx
+      env: LISP=ecl # ECL is too old on Ubuntu 14.04
 install:
   # Install SBCL
   - |
