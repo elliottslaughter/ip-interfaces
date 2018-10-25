@@ -42,10 +42,10 @@
     (ifa-data :pointer))
 
   (defcfun "getifaddrs" :int
-    (ifaddrs (:pointer (:pointer ifaddrs))))
+    (ifaddrs (:pointer (:pointer (:struct ifaddrs)))))
 
   (defcfun "freeifaddrs" :void
-    (ifaddrs (:pointer ifaddrs))))
+    (ifaddrs (:pointer (:struct ifaddrs)))))
 
 #+windows
 (progn
@@ -77,15 +77,15 @@
     (sin6-addr :uchar :count 16))
 
   (defcunion sockaddr-gen
-    (address sockaddr)
-    (address-in sockaddr-in)
-    (address-in6 sockaddr-in6-old))
+    (address (:struct sockaddr))
+    (address-in (:struct sockaddr-in))
+    (address-in6 (:struct sockaddr-in6-old)))
 
   (defcstruct interface-info
     (ii-flags :ulong)
-    (ii-address sockaddr-gen)
-    (ii-broadcast-address sockaddr-gen)
-    (ii-netmask sockaddr-gen))
+    (ii-address (:union sockaddr-gen))
+    (ii-broadcast-address (:union sockaddr-gen))
+    (ii-netmask (:union sockaddr-gen)))
 
   (defcstruct wsadata
     (w-version word)
@@ -106,7 +106,7 @@
 
   (defcfun "WSAStartup" :int
     (w-version-requested word)
-    (lp-wsadata (:pointer wsadata)))
+    (lp-wsadata (:pointer (:struct wsadata))))
 
   (defcfun "WSAIoctl" :int
     (socket socket)
