@@ -1,36 +1,28 @@
 language: minimal
 sudo: required
 dist: trusty
+
 os:
   - linux
   - osx
+
 env:
   matrix:
-  - LISP=sbcl LISPFLAGS=--disable-debugger
+  - LISP=allegro
+  - LISP=ccl-bin
+  - LISP=clisp
+  - LISP=cmu-bin
   - LISP=ecl
+  - LISP=sbcl-bin
+
 matrix:
   exclude:
     - os: osx
-      env: LISP=ecl # ECL is too old on Ubuntu 14.04
-install:
-  # Install SBCL
-  - |
-    if [[ "$(uname)" = "Linux" ]]; then
-      sudo apt-get install $LISP
-    fi
-  - |
-    if [[ "$(uname)" = "Darwin" ]]; then
-      brew update
-      brew install $LISP
-    fi
+      env: LISP=clisp
 
-  # Install Quicklisp
-  - curl -O https://beta.quicklisp.org/quicklisp.lisp
-  - $LISP $LISPFLAGS --load quicklisp.lisp --eval '(quicklisp-quickstart:install)' --eval '(ql::without-prompting (ql:add-to-init-file))' --eval '(quit)'
-  - |
-   cat >> ~/.${LISP}rc <<EOF
-   (pushnew *default-pathname-defaults* asdf:*central-registry* :test #'equal)
-  # Hack: This works because it terminates when it fails to see the EOF
+install:
+  - curl -L https://raw.githubusercontent.com/roswell/roswell/release/scripts/install-for-ci.sh | sh
+  - ros run -e '(format t "~a ~a~%" (lisp-implementation-type) (lisp-implementation-version))' -q
 
 script:
-  - $LISP $LISPFLAGS --eval '(ql:quickload :ip-interfaces)' --eval '(format t "~a~%" (ip-interfaces:get-ip-interfaces))' --eval '(quit)'
+  - ros run -e '(ql:quickload :ip-interfaces)' -e '(format t "~a~%" (ip-interfaces:get-ip-interfaces))' -q
