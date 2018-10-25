@@ -1,4 +1,4 @@
-;;;   Copyright (C) 2010 Elliott Slaughter <elliottslaughter@gmail.com>
+;;;   Copyright (C) 2010, 2018 Elliott Slaughter <elliottslaughter@gmail.com>
 ;;;
 ;;;   This file was *NOT* derived from Clozure CL source code.
 ;;;   However, it is licensed under the LLGPL to maintain license
@@ -19,4 +19,5 @@
                (:file "sockets")
                (:file "ip-interfaces"))
   :serial t
-  :depends-on (:cffi))
+  :depends-on (:cffi)
+  :in-order-to ((test-op (test-op ip-interfaces-test))))
