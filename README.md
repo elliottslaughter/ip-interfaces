@@ -12,10 +12,11 @@ ip-interfaces has been tested successfully on the following platforms:
 | Implementation | Windows | Mac OS X | Linux | OpenBSD |
 | :------------- | :------ | :------- | :---- | :------ |
 | SBCL           | Yes     | Yes      | Yes   | Yes     |
-| CLISP          | Yes     | Yes      |       | Yes     |
-| Clozure        | Yes     | Yes      |       |         |
-| Allegro        | Yes     | Yes      |       |         |
-| ECL            |         | Yes      |       | Yes     |
+| CMUCL          |         | Yes      | Yes   |         |
+| CLISP          | Yes     | Yes      | Yes   | Yes     |
+| Clozure        | Yes     | Yes      | Yes   |         |
+| Allegro        | Yes     | Yes      | Yes   |         |
+| ECL            |         | Yes      | Yes   | Yes     |
 | LispWorks      | Yes     |          |       |         |
 
 IP-Interfaces is released under the
