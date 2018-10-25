@@ -25,7 +25,7 @@ install:
   - $LISP $LISPFLAGS --load quicklisp.lisp --eval '(quicklisp-quickstart:install)' --eval '(ql::without-prompting (ql:add-to-init-file))' --eval '(quit)'
   - |
    cat >> ~/.${LISP}rc <<EOF
-   (pushnew #p"$PWD" asdf:*central-registry* :test #'equal)
+   (pushnew *default-pathname-defaults* asdf:*central-registry* :test #'equal)
   # Hack: This works because it terminates when it fails to see the EOF
 
 script:
