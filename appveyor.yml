@@ -15,13 +15,13 @@ install:
   - ps: ros run -e '123' -q
   - ps: echo '(print "asdf")'
   - ps: ros run -e '(print \"asdf\")' -q
-  - ps: ros run -e '(format t "~a ~a~%" (lisp-implementation-type) (lisp-implementation-version))' -q
+  - ps: ros run -e '(format t \"~a ~a~%\" (lisp-implementation-type) (lisp-implementation-version))' -q
 
 build: false
 
 test_script:
   # Run a basic sanity test for human-readable output.
-  - ps: ros run -e '(ql:quickload :ip-interfaces)' -e '(format t "~a~%" (ip-interfaces:get-ip-interfaces))' -q
+  - ps: ros run -e '(ql:quickload :ip-interfaces)' -e '(format t \"~a~%\" (ip-interfaces:get-ip-interfaces))' -q
 
   # Run test suite.
   - ps: ros run -e '(ql:quickload :prove)' -e '(ql:quickload :ip-interfaces)' -e '(asdf:test-system :ip-interfaces)' -q
