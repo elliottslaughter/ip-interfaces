@@ -11,3 +11,4 @@ install:
   - appveyor DownloadFile "https://ci.appveyor.com/api/buildjobs/nrfdm3edqcur4l8a/artifacts/Roswell-x86_64.zip" -FileName Roswell-x86_64.zip
   - 7z x Roswell-x86_64.zip
   - dir
+  - dir roswell
