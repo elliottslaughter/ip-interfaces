@@ -1,0 +1,24 @@
+image: Visual Studio 2015
+
+platform:
+    - x64
+
+environment:
+  matrix:
+    - LISP: sbcl-bin
+
+install:
+  - ps: appveyor DownloadFile 'https://ci.appveyor.com/api/projects/snmsts/roswell-en89n/artifacts/Roswell-x86_64.zip?branch=master&job=Environment%3A%20MSYS2_ARCH%3Dx86_64,%20MSYS2_BITS%3D64,%20MSYSTEM%3DMINGW64,%20METHOD%3Dcross' -FileName Roswell-x86_64.zip
+  - 7z x Roswell-x86_64.zip
+  - set PATH=%CD%/roswell;%PATH%
+  - ros install %LISP%
+  - ps: ros run -e '(format t \"~a ~a~%\" (lisp-implementation-type) (lisp-implementation-version))' -q
+
+build: false
+
+test_script:
+  # Run a basic sanity test for human-readable output.
+  - ps: ros run -e '(push *default-pathname-defaults* asdf:*central-registry*)' -e '(ql:quickload :ip-interfaces)' -e '(format t \"~a~%\" (ip-interfaces:get-ip-interfaces))' -q
+
+  # Run test suite.
+  - ps: ros run -e '(push *default-pathname-defaults* asdf:*central-registry*)' -e '(ql:quickload :prove)' -e '(ql:quickload :ip-interfaces)' -e '(asdf:test-system :ip-interfaces)' -q
