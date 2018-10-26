@@ -14,7 +14,7 @@ install:
   - ros install %LISP%
   - ps: ros run -e '123' -q
   - ps: echo '(print "asdf")'
-  - ps: ros run -e '(print "asdf")' -q
+  - ps: ros run -e '(print \"asdf\")' -q
   - ps: ros run -e '(format t "~a ~a~%" (lisp-implementation-type) (lisp-implementation-version))' -q
 
 build: false
