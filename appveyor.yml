@@ -10,6 +10,7 @@ environment:
     - LISP: sbcl-bin
 
 install:
+  - echo "%ROSWELL_URL%"
   - appveyor DownloadFile "%ROSWELL_URL%" -FileName Roswell-x86_64.zip
   - 7z x Roswell-x86_64.zip
   - dir
