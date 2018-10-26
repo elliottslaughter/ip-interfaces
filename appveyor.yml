@@ -12,3 +12,6 @@ install:
   - 7z x Roswell-x86_64.zip
   - dir
   - dir roswell
+  - set PATH=%CD%/roswell;%PATH%
+  - ros install %LISP%
+  - ros run -e '(format t "~a ~a~%" (lisp-implementation-type) (lisp-implementation-version))' -q
