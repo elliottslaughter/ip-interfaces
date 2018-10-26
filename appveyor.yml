@@ -5,11 +5,6 @@ platform:
 
 environment:
   matrix:
-    - LISP: allegro
-    - LISP: ccl-bin
-    - LISP: clisp
-    - LISP: cmu-bin
-    - LISP: ecl
     - LISP: sbcl-bin
 
 install:
