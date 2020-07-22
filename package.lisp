@@ -13,6 +13,7 @@
 
    :filter-ip-interfaces-by-flags
 
+   :ip-interface
    :ip-interface-name
    :ip-interface-address
    :ip-interface-netmask
