@@ -26,10 +26,15 @@
 
 #+unix
 (progn
+  #+(or darwin freebsd openbsd netbsd)
   (defcstruct sockaddr
-    #-(or darwin openbsd) (sa-family :ushort)
-    #+(or darwin openbsd) (sa-len :uchar)
-    #+(or darwin openbsd) (sa-family :uchar)
+    (sa-len :uchar)
+    (sa-family :uchar)
+    (sa-data :uchar :offset 4 :count 14))
+
+  #-(or darwin freebsd openbsd netbsd)
+  (defcstruct sockaddr
+    (sa-family :ushort)
     (sa-data :uchar :offset 4 :count 14))
 
   (defcstruct ifaddrs
