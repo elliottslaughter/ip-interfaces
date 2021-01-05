@@ -1,0 +1,28 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: lisp = ${{ matrix.lisp }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        lisp: [sbcl, ccl, clisp]
+    env:
+      LISP: ${{ matrix.lisp }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo apt-get install info install-info
+      - name: Install CIM
+        run: |
+          curl -L https://raw.githubusercontent.com/shamazmazum/cl-cirrus/github-actions/install-actions.sh | sh
+      - name: List interfaces
+        run: |
+          cl -l ip-interfaces -e '(progn (format t "~a~%" (ip-interfaces:get-ip-interfaces)) (uiop:quit))'
+      - name: Run tests
+        run: |
+          cl -l ip-interfaces-test -e '(asdf:test-system :ip-interfaces)'
