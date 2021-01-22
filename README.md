@@ -1,4 +1,4 @@
-# ip-interfaces [![Build Status](https://travis-ci.org/elliottslaughter/ip-interfaces.svg?branch=master)](https://travis-ci.org/elliottslaughter/ip-interfaces) [![Build status](https://ci.appveyor.com/api/projects/status/l2d355fbg0euv0nd/branch/master?svg=true)](https://ci.appveyor.com/project/elliottslaughter/ip-interfaces/branch/master)
+# ip-interfaces [![Build Status](https://github.com/elliottslaughter/ip-interfaces/workflows/CI/badge.svg)](https://github.com/elliottslaughter/ip-interfaces/actions) [![Build status](https://ci.appveyor.com/api/projects/status/l2d355fbg0euv0nd/branch/master?svg=true)](https://ci.appveyor.com/project/elliottslaughter/ip-interfaces/branch/master)
 
 ## Introduction
 
